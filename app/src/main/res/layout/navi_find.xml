@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nv_find"
+    android:layout_width="match_parent"
+    android:layout_height="720dp"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#CAC6C6"
+        android:hint="위치를 입력하세요..."></EditText>
+
+
+</LinearLayout>
