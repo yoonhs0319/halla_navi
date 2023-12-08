@@ -64,15 +64,15 @@ public class mapping extends AppCompatActivity {
         ft = fm.beginTransaction();
         switch (n){
             case 0:
-                ft.replace(R.id.map,star);
+                ft.replace(R.id.b_nv_frame,star);
                 ft.commit();
                 break;
             case 1:
-                ft.replace(R.id.map,location);
+                ft.replace(R.id.b_nv_frame,location);
                 ft.commit();
                 break;
             case 2:
-                ft.replace(R.id.map,history);
+                ft.replace(R.id.b_nv_frame,history);
                 ft.commit();
                 break;
         }
