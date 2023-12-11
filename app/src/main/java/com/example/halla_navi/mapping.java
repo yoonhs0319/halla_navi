@@ -47,6 +47,11 @@ public class mapping extends AppCompatActivity {
                     layoutParams.height += 100;
                     b_nv_frame.setLayoutParams(layoutParams);
                     return true;
+                } else if (distanceY < MIN_SWIPE_DISTANCE) {
+                    ViewGroup.LayoutParams layoutParams = b_nv_frame.getLayoutParams();
+                    layoutParams.height -= 100;
+                    b_nv_frame.setLayoutParams(layoutParams);
+                    return true;
                 }
                 return false;
             }
@@ -94,14 +99,14 @@ public class mapping extends AppCompatActivity {
         long gaptime = curtime - back_time;
 
         if(0 <= gaptime && 2000 >= gaptime){
+            System.exit(0);
+        } else if (back_time < 0) {
             super.onBackPressed();
-        }
-        else{
+        } else{
             back_time = curtime;
             Toast.makeText(this, "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
         }
     }
-
     private void startfind(){
         Intent intent = new Intent(this, navi_find.class);
         startActivity(intent);
