@@ -60,7 +60,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="555dp"
+            android:layout_height="545dp"
             app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -90,7 +90,7 @@
         <FrameLayout
             android:id="@+id/b_nv_frame"
             android:layout_width="match_parent"
-            android:layout_height="122dp">
+            android:layout_height="132dp">
 
         </FrameLayout>
     </LinearLayout>

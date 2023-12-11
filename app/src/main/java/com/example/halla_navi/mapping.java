@@ -1,31 +1,64 @@
 package com.example.halla_navi;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class mapping extends AppCompatActivity {
 
-   private BottomNavigationView b_nv;
-   private FragmentManager fm;
-   private FragmentTransaction ft;
-   private star star;
-   private history history;
-   private location location;
+    private static final int MIN_SWIPE_DISTANCE = 1000;
+    private GestureDetector gestureDetector;
+    private FrameLayout b_nv_frame;
+    private BottomNavigationView b_nv;
+    private FragmentManager fm;
+    private FragmentTransaction ft;
+    private star star;
+    private history history;
+    private location location;
+    private long back_time = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mapping);
+
+        b_nv_frame = findViewById(R.id.b_nv_frame);
+        gestureDetector = new GestureDetector(this,new GestureDetector.SimpleOnGestureListener(){
+            @Override
+            public boolean onScroll(@Nullable MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
+                if (distanceY < -MIN_SWIPE_DISTANCE) {
+                    ViewGroup.LayoutParams layoutParams = b_nv_frame.getLayoutParams();
+                    layoutParams.height += 100;
+                    b_nv_frame.setLayoutParams(layoutParams);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        b_nv_frame.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
+
         b_nv = findViewById(R.id.b_nv);
         b_nv.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -43,6 +76,7 @@ public class mapping extends AppCompatActivity {
         star = new star();
         history = new history();
         location = new location();
+        setFrag(0);
 
         ImageButton find = findViewById(R.id.find);
         find.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +86,20 @@ public class mapping extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        long curtime = System.currentTimeMillis();
+        long gaptime = curtime - back_time;
+
+        if(0 <= gaptime && 2000 >= gaptime){
+            super.onBackPressed();
+        }
+        else{
+            back_time = curtime;
+            Toast.makeText(this, "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void startfind(){
